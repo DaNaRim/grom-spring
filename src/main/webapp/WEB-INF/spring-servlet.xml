@@ -15,8 +15,11 @@
 
     <bean id="orderDAO" class="com.OrderDAO"/>
 
-    <bean id="Route" class="com.homework1.Route"/>
-    <bean id="Service" class="com.homework1.Service"/>
-    <bean id="Step" class="com.homework1.Step"/>
+    <bean id="route" class="com.homework1.Route"/>
+    <bean id="service" class="com.homework1.Service"/>
+    <bean id="step" class="com.homework1.Step"/>
+
+    <bean id="itemDAO" class="com.homework2.DAO.ItemDAO"/>
+    <bean id="itemService" class="com.homework2.service.ItemService"/>
 
 </beans>
