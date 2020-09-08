@@ -1,9 +1,9 @@
-package com.homework2.controller;
+package com.lesson2.homework2.controller;
 
-import com.homework2.exception.BadRequestException;
-import com.homework2.exception.InternalServerException;
-import com.homework2.model.Item;
-import com.homework2.service.ItemService;
+import com.lesson2.homework2.exception.BadRequestException;
+import com.lesson2.homework2.exception.InternalServerException;
+import com.lesson2.homework2.model.Item;
+import com.lesson2.homework2.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

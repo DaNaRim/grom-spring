@@ -1,4 +1,4 @@
-package com;
+package com.lesson2;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -11,6 +11,6 @@
         <property name="hibernate.connection.username">main</property>
         <property name="hibernate.connection.password">PyP2p02rIZ9uyMBpTBwW</property>
 
-        <mapping class="com.homework2.model.Item"/>
+        <mapping class="com.lesson2.homework2.model.Item"/>
     </session-factory>
 </hibernate-configuration>

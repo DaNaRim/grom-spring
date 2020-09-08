@@ -1,4 +1,4 @@
-package com.homework2.exception;
+package com.lesson2.homework2.exception;
 
 public class InternalServerException extends Exception {
 

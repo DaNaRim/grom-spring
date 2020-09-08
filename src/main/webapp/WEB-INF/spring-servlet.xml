@@ -9,17 +9,17 @@
 
     <context:component-scan base-package="com"/>
 
-    <bean id="orderService" class="com.OrderService">
+    <bean id="orderService" class="com.lesson2.OrderService">
         <!--<constructor-arg name="name" value="value"/>-->
     </bean>
 
-    <bean id="orderDAO" class="com.OrderDAO"/>
+    <bean id="orderDAO" class="com.lesson2.OrderDAO"/>
 
-    <bean id="route" class="com.homework1.Route"/>
-    <bean id="service" class="com.homework1.Service"/>
-    <bean id="step" class="com.homework1.Step"/>
+    <bean id="route" class="com.lesson2.homework1.Route"/>
+    <bean id="service" class="com.lesson2.homework1.Service"/>
+    <bean id="step" class="com.lesson2.homework1.Step"/>
 
-    <bean id="itemDAO" class="com.homework2.DAO.ItemDAO"/>
-    <bean id="itemService" class="com.homework2.service.ItemService"/>
+    <bean id="itemDAO" class="com.lesson2.homework2.DAO.ItemDAO"/>
+    <bean id="itemService" class="com.lesson2.homework2.service.ItemService"/>
 
 </beans>

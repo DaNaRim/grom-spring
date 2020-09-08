@@ -1,4 +1,4 @@
-package com.homework1;
+package com.lesson2.homework1;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

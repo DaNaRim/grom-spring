@@ -1,4 +1,4 @@
-package com.homework2.model;
+package com.lesson2.homework2.model;
 
 import javax.persistence.*;
 import java.util.Date;

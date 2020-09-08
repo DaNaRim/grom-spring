@@ -1,10 +1,10 @@
-package com.homework2.service;
+package com.lesson2.homework2.service;
 
 
-import com.homework2.DAO.ItemDAO;
-import com.homework2.exception.BadRequestException;
-import com.homework2.exception.InternalServerException;
-import com.homework2.model.Item;
+import com.lesson2.homework2.DAO.ItemDAO;
+import com.lesson2.homework2.exception.BadRequestException;
+import com.lesson2.homework2.exception.InternalServerException;
+import com.lesson2.homework2.model.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ItemService {
