@@ -1,4 +1,4 @@
-package com.lesson3.homework.homework.Exceptions;
+package com.lesson3.homework.exceptions;
 
 public class BadRequestException extends Exception {
 

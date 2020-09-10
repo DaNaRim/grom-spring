@@ -1,4 +1,4 @@
-package com.lesson3.homework.homework.demo;
+package com.lesson3.homework.demo;
 
 public class Demo {
     public static void main(String[] args) throws Exception {

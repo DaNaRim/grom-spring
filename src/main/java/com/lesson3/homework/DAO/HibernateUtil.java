@@ -1,4 +1,4 @@
-package com.lesson3.homework.homework.DAO;
+package com.lesson3.homework.DAO;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

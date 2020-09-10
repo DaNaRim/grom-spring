@@ -22,4 +22,12 @@
     <bean id="itemDAO" class="com.lesson2.homework2.DAO.ItemDAO"/>
     <bean id="itemService" class="com.lesson2.homework2.service.ItemService"/>
 
+    <bean id="fileDAO" class="com.lesson3.homework.DAO.FileDAOImpl"/>
+    <bean id="storageDAO" class="com.lesson3.homework.DAO.StorageDAOImpl"/>
+    <bean id="fileStorageFacade" class="com.lesson3.homework.DAO.FileStorageFacadeImpl"/>
+    <bean id="fileService" class="com.lesson3.homework.service.FileServiceImpl"/>
+    <bean id="storageService" class="com.lesson3.homework.service.StorageServiceImpl"/>
+    <bean id="fileController" class="com.lesson3.homework.controller.FileController"/>
+    <bean id="storageController" class="com.lesson3.homework.controller.StorageController"/>
+
 </beans>
