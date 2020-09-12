@@ -23,7 +23,7 @@ public class DAO<T> {
             transaction.commit();
             return object;
         } catch (HibernateException e) {
-            throw new InternalServerException("save failed: something went wrong");
+            throw new InternalServerException("save failed: something went wrong: " + e.getMessage());
         }
     }
 
@@ -38,7 +38,7 @@ public class DAO<T> {
 
             return object;
         } catch (HibernateException e) {
-            throw new InternalServerException("findById failed: something went wrong");
+            throw new InternalServerException("findById failed: something went wrong: " + e.getMessage());
         }
     }
 
@@ -52,7 +52,7 @@ public class DAO<T> {
             transaction.commit();
             return object;
         } catch (HibernateException e) {
-            throw new InternalServerException("update failed: something went wrong");
+            throw new InternalServerException("update failed: something went wrong: " + e.getMessage());
         }
     }
 
@@ -65,7 +65,7 @@ public class DAO<T> {
 
             transaction.commit();
         } catch (HibernateException e) {
-            throw new InternalServerException("delete failed: something went wrong");
+            throw new InternalServerException("delete failed: something went wrong: " + e.getMessage() );
         }
     }
 }

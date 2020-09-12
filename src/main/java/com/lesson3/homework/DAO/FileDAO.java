@@ -5,6 +5,8 @@ import com.lesson3.homework.exceptions.InternalServerException;
 import com.lesson3.homework.model.File;
 import com.lesson3.homework.model.Storage;
 
+import java.util.List;
+
 public interface FileDAO {
 
     File save(File file) throws InternalServerException;
@@ -17,5 +19,5 @@ public interface FileDAO {
 
     void checkFileName(Storage storage, File file) throws BadRequestException, InternalServerException;
 
-
+    List<File> getFilesByStorage(Storage storage) throws InternalServerException;
 }

@@ -1,5 +1,6 @@
 package com.lesson3.homework.service;
 
+import com.lesson3.homework.DAO.FileDAO;
 import com.lesson3.homework.DAO.FileStorageFacade;
 import com.lesson3.homework.DAO.StorageDAO;
 import com.lesson3.homework.exceptions.BadRequestException;
@@ -12,13 +13,14 @@ public class StorageServiceImpl implements StorageService {
 
     private final FileStorageFacade fileStorageFacade;
     private final StorageDAO storageDAO;
+    private final FileDAO fileDAO;
 
     @Autowired
-    public StorageServiceImpl(FileStorageFacade fileStorageFacade, StorageDAO storageDAO) {
+    public StorageServiceImpl(FileStorageFacade fileStorageFacade, StorageDAO storageDAO, FileDAO fileDAO) {
         this.fileStorageFacade = fileStorageFacade;
         this.storageDAO = storageDAO;
+        this.fileDAO = fileDAO;
     }
-
 
     public Storage save(Storage storage) throws InternalServerException {
         return storageDAO.save(storage);
@@ -27,6 +29,8 @@ public class StorageServiceImpl implements StorageService {
     public void delete(long id) throws BadRequestException, InternalServerException {
         try {
             Storage storage = findById(id);
+            storage.setFiles(fileDAO.getFilesByStorage(storage));
+
             fileStorageFacade.delete(storage);
         } catch (BadRequestException e) {
             throw new BadRequestException("Cannot delete storage " + id + " : " + e.getMessage());
@@ -47,9 +51,9 @@ public class StorageServiceImpl implements StorageService {
         return storageDAO.findById(id);
     }
 
-    private void checkFormatSupported(Storage storage) throws BadRequestException {
+    private void checkFormatSupported(Storage storage) throws BadRequestException, InternalServerException {
         try {
-            for (File file : storage.getFiles()) {
+            for (File file : fileDAO.getFilesByStorage(storage)) {
                 checkFileFormat(storage, file);
             }
         } catch (BadRequestException e) {
@@ -58,7 +62,7 @@ public class StorageServiceImpl implements StorageService {
     }
 
     private void checkFileFormat(Storage storage, File file) throws BadRequestException {
-        for (String str : storage.getTRFormatsSupported()) {
+        for (String str : storage.getArrayFormatsSupported()) {
             if (file.getFormat().equals(str)) return;
         }
         throw new BadRequestException("Unsuitable format");

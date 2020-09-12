@@ -3,13 +3,14 @@ package com.lesson3.homework.model;
 import com.lesson3.homework.exceptions.BadRequestException;
 
 import javax.persistence.*;
-import java.util.HashSet;
+import java.util.Arrays;
+import java.util.List;
 
 @Entity
 @Table(name = "STORAGE")
 public class Storage {
     private long id;
-    private HashSet<File> files;
+    private List<File> files;
     private String[] formatsSupported;
     private String storageCountry;
     private long storageSize;
@@ -19,23 +20,13 @@ public class Storage {
     }
 
     public Storage(String[] formatsSupported, String storageCountry, long storageSize) throws BadRequestException {
-        if (formatsSupported == null || formatsSupported.length == 0 || storageCountry == null ||
-                storageCountry.equals("") || storageSize <= 0) {
-            throw new BadRequestException("Fields are not filed correctly");
-        }
+
+        if (storageSize <= 0) throw new BadRequestException("storageSize must be > 0");
+
         this.formatsSupported = formatsSupported;
         this.storageCountry = storageCountry;
         this.storageSize = storageSize;
         this.freeSpace = storageSize;
-    }
-
-    public Storage(long id, HashSet<File> files, String[] formatsSupported, String storageCountry, long storageSize, long freeSpace) {
-        this.id = id;
-        this.files = files;
-        this.formatsSupported = formatsSupported;
-        this.storageCountry = storageCountry;
-        this.storageSize = storageSize;
-        this.freeSpace = freeSpace;
     }
 
     @Id
@@ -46,13 +37,17 @@ public class Storage {
         return id;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "FILES")
-    public HashSet<File> getFiles() {
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    public List<File> getFiles() {
         return files;
     }
 
+    public void setFiles(List<File> files) {
+        this.files = files;
+    }
+
     @Transient
-    public String[] getTRFormatsSupported() {
+    public String[] getArrayFormatsSupported() {
         return formatsSupported;
     }
 
@@ -61,7 +56,7 @@ public class Storage {
 
         StringBuilder formatsSupported = new StringBuilder();
 
-        for (String str : getTRFormatsSupported()) {
+        for (String str : getArrayFormatsSupported()) {
             formatsSupported.append(str).append(", ");
         }
         formatsSupported.delete(formatsSupported.lastIndexOf(", "), formatsSupported.length());
@@ -88,12 +83,8 @@ public class Storage {
         this.id = id;
     }
 
-    public void setFiles(HashSet<File> files) {
-        this.files = files;
-    }
-
-    public void setFormatsSupported(String[] formatsSupported) {
-        this.formatsSupported = formatsSupported;
+    public void setFormatsSupported(String formatsSupported) {
+        this.formatsSupported = formatsSupported.split(", ");
     }
 
     public void setStorageCountry(String storageCountry) {
@@ -106,5 +97,16 @@ public class Storage {
 
     public void setFreeSpace(long freeSpace) {
         this.freeSpace = freeSpace;
+    }
+
+    @Override
+    public String toString() {
+        return "Storage{" +
+                "id=" + id +
+                ", formatsSupported=" + Arrays.toString(formatsSupported) +
+                ", storageCountry='" + storageCountry + '\'' +
+                ", storageSize=" + storageSize +
+                ", freeSpace=" + freeSpace +
+                '}';
     }
 }

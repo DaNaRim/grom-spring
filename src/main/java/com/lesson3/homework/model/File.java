@@ -5,7 +5,7 @@ import com.lesson3.homework.exceptions.BadRequestException;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "HOTEL")
+@Table(name = "FILES")
 public class File {
     private long id;
     private String name;
@@ -17,21 +17,13 @@ public class File {
     }
 
     public File(String name, String format, long size) throws BadRequestException {
-        if (name == null || format == null || size <= 0 || name.equals("") || format.equals("")) {
-            throw new BadRequestException("Fields are not filed correctly");
-        }
-        if (name.length() > 10) throw new BadRequestException("Name length must be <= 10");
-        this.name = name;
-        this.format = format;
-        this.size = size;
-    }
 
-    public File(long id, String name, String format, long size, Storage storage) {
-        this.id = id;
+        if (size <= 0) throw new BadRequestException("Size must be > 0");
+        if (name.length() > 10) throw new BadRequestException("Name length must be <= 10");
+
         this.name = name;
         this.format = format;
         this.size = size;
-        this.storage = storage;
     }
 
     @Id
@@ -42,7 +34,7 @@ public class File {
         return id;
     }
 
-    @Column(name = "NANE")
+    @Column(name = "NAME")
     public String getName() {
         return name;
     }
@@ -81,5 +73,16 @@ public class File {
 
     public void setStorage(Storage storage) {
         this.storage = storage;
+    }
+
+    @Override
+    public String toString() {
+        return "File{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", format='" + format + '\'' +
+                ", size=" + size +
+                ", storage=" + storage +
+                '}';
     }
 }

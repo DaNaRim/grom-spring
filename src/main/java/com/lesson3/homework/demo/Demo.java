@@ -1,9 +1,20 @@
 package com.lesson3.homework.demo;
 
+import com.lesson3.homework.model.Storage;
+
 public class Demo {
+//    static StorageController storageController;
+//    static FileController fileController;
+//
+//    public Demo(StorageController storageController, FileController fileController) {
+//        Demo.storageController = storageController;
+//        Demo.fileController = fileController;
+//    }
+//
     public static void main(String[] args) throws Exception {
+//
 //        Storage storage = new Storage(new String[]{"txt", "jpeg"}, "Test2", 10000);
-//        System.out.println(StorageController.save(storage).getId());
+//        storageController.save(storage);
 
 //        Storage storage1 = StorageController.findById(5512760101582555346L);
 //        Storage storage2 = StorageController.findById(5247992291040511811L);

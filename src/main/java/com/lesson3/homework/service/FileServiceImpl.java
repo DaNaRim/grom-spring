@@ -46,6 +46,8 @@ public class FileServiceImpl implements FileService {
     public void transferAll(Storage storageFrom, Storage storageTo)
             throws BadRequestException, InternalServerException {
         try {
+            storageFrom.setFiles(fileDAO.getFilesByStorage(storageFrom));
+
             checkStorages(storageFrom, storageTo);
             checkFilesFormat(storageFrom, storageTo);
             checkSize(storageFrom, storageTo);
@@ -61,6 +63,8 @@ public class FileServiceImpl implements FileService {
     public void transferFile(Storage storageFrom, Storage storageTo, long id)
             throws BadRequestException, InternalServerException {
         try {
+            storageFrom.setFiles(fileDAO.getFilesByStorage(storageFrom));
+
             File file = fileDAO.findById(id);
             checkStorages(storageFrom, storageTo);
             checkFileFormat(storageTo, file);
@@ -94,7 +98,7 @@ public class FileServiceImpl implements FileService {
     }
 
     private void checkFileFormat(Storage storage, File file) throws BadRequestException {
-        for (String str : storage.getTRFormatsSupported()) {
+        for (String str : storage.getArrayFormatsSupported()) {
             if (file.getFormat().equals(str)) return;
         }
         throw new BadRequestException("Unsuitable format");

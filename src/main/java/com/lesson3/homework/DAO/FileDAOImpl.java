@@ -11,6 +11,7 @@ import javax.persistence.NoResultException;
 import java.util.List;
 
 public class FileDAOImpl extends DAO<File> implements FileDAO {
+
     private static final String getFilesByStorageQuery = "SELECT * FROM FILES WHERE STORAGE_ID = :storageId";
     private static final String checkFileNameQuery = "SELECT * FROM FILES WHERE NAME = :name AND STORAGE_ID = :storageId";
 
