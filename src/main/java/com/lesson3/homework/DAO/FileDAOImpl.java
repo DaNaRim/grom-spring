@@ -23,7 +23,7 @@ public class FileDAOImpl extends DAO<File> implements FileDAO {
         try (Session session = HibernateUtil.createSessionFactory().openSession()) {
 
             session.createNativeQuery(checkFileNameQuery, File.class)
-                    .setParameter(":name", file.getName())
+                    .setParameter("name", file.getName())
                     .setParameter("storageId", storage.getId())
                     .getSingleResult();
 

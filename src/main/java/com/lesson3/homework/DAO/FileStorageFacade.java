@@ -6,9 +6,9 @@ import com.lesson3.homework.model.Storage;
 
 public interface FileStorageFacade {
 
-    void delete(Storage storage) throws InternalServerException;
-
     File put(Storage storage, File file) throws InternalServerException;
+
+    File update(File file) throws InternalServerException;
 
     void delete(Storage storage, File file) throws InternalServerException;
 

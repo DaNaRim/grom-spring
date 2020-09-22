@@ -36,7 +36,7 @@ public class FileStorageFacadeImpl implements FileStorageFacade {
             return file;
         } catch (HibernateException e) {
             throw new InternalServerException("put failed: something went wrong while trying to save the file " +
-                    file.getId() + "in storage " + storage.getId());
+                    file.getName() + "in storage " + storage.getId() + " : " + e.getMessage());
         }
     }
 
@@ -54,7 +54,7 @@ public class FileStorageFacadeImpl implements FileStorageFacade {
             transaction.commit();
         } catch (HibernateException e) {
             throw new InternalServerException("delete failed: something went wrong while trying to delete the file " +
-                    file.getId() + "in storage " + storage.getId());
+                    file.getId() + "in storage " + storage.getId() + " : " + e.getMessage());
         }
     }
 
@@ -86,7 +86,7 @@ public class FileStorageFacadeImpl implements FileStorageFacade {
             return file;
         } catch (HibernateException | BadRequestException e) {
             throw new InternalServerException("update failed: something went wrong while trying to update the file " +
-                    file.getId());
+                    file.getId() + " : " + e.getMessage());
         }
     }
 
@@ -110,7 +110,8 @@ public class FileStorageFacadeImpl implements FileStorageFacade {
             transaction.commit();
         } catch (HibernateException e) {
             throw new InternalServerException("transferAll failed: something went wrong while trying to transfer " +
-                    "files from storage " + storageFrom.getId() + " to storage " + storageTo.getId());
+                    "files from storage " + storageFrom.getId() + " to storage " + storageTo.getId() + " : "
+                    + e.getMessage());
         }
     }
 
@@ -133,23 +134,8 @@ public class FileStorageFacadeImpl implements FileStorageFacade {
             transaction.commit();
         } catch (HibernateException | BadRequestException e) {
             throw new InternalServerException("transferFile failed: something went wrong while trying to transfer " +
-                    "file " + id + "from storage " + storageFrom.getId() + " to storage " + storageTo.getId());
-        }
-    }
-
-    public void delete(Storage storage) throws InternalServerException {
-        try (Session session = HibernateUtil.createSessionFactory().openSession()) {
-            Transaction transaction = session.getTransaction();
-            transaction.begin();
-
-            for (File file : storage.getFiles()) {
-                fileDAO.delete(file);
-            }
-            storageDAO.delete(storage);
-
-            transaction.commit();
-        } catch (HibernateException e) {
-            throw new InternalServerException("delete failed: something went wrong");
+                    "file " + id + "from storage " + storageFrom.getId() + " to storage " + storageTo.getId() + " : " +
+                    e.getMessage());
         }
     }
 }

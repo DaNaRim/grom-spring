@@ -28,6 +28,5 @@
     <bean id="fileService" class="com.lesson3.homework.service.FileServiceImpl"/>
     <bean id="storageService" class="com.lesson3.homework.service.StorageServiceImpl"/>
     <bean id="fileController" class="com.lesson3.homework.controller.FileController"/>
-    <bean id="storageController" class="com.lesson3.homework.controller.StorageController"/>
 
 </beans>

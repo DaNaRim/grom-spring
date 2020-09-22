@@ -87,7 +87,7 @@ public class FileServiceImpl implements FileService {
             checkSize(storage, file);
             fileDAO.checkFileName(storage, file);
 
-            return fileDAO.update(file);
+            return fileStorageFacade.update(file);
         } catch (BadRequestException e) {
             throw new BadRequestException("Cannot update file " + file.getId() + " : " + e.getMessage());
         }
@@ -104,8 +104,7 @@ public class FileServiceImpl implements FileService {
         throw new BadRequestException("Unsuitable format");
     }
 
-    private void checkFilesFormat(Storage storageFrom, Storage storageTo)
-            throws BadRequestException {
+    private void checkFilesFormat(Storage storageFrom, Storage storageTo) throws BadRequestException {
         for (File file : storageFrom.getFiles()) {
             checkFileFormat(storageTo, file);
         }
@@ -122,8 +121,8 @@ public class FileServiceImpl implements FileService {
         }
     }
 
-    private void checkFiles(Storage storageFrom, Storage storageTo)
-            throws BadRequestException, InternalServerException {
+    private void checkFiles(Storage storageFrom, Storage storageTo) throws BadRequestException,
+            InternalServerException {
         for (File file : storageFrom.getFiles()) {
             fileDAO.checkFileName(storageTo, file);
         }
