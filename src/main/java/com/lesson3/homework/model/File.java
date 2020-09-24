@@ -49,7 +49,7 @@ public class File {
         return size;
     }
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "STORAGE_ID", nullable = false)
     public Storage getStorage() {
         return storage;
