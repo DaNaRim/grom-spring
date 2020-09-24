@@ -28,7 +28,7 @@ public class File {
 
     @Id
     @SequenceGenerator(name = "fileSeq", sequenceName = "FILES_SEQ", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "FileSeq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "fileSeq")
     @Column(name = "ID")
     public long getId() {
         return id;

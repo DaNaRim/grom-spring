@@ -13,7 +13,7 @@ public class DAO<T> {
         this.tClass = tClass;
     }
 
-    public final T save(T object) throws InternalServerException {
+    public T save(T object) throws InternalServerException {
         try (Session session = HibernateUtil.createSessionFactory().openSession()) {
             Transaction transaction = session.getTransaction();
             transaction.begin();
@@ -42,7 +42,7 @@ public class DAO<T> {
         }
     }
 
-    public final T update(T object) throws InternalServerException {
+    public T update(T object) throws InternalServerException {
         try (Session session = HibernateUtil.createSessionFactory().openSession()) {
             Transaction transaction = session.getTransaction();
             transaction.begin();
@@ -56,7 +56,7 @@ public class DAO<T> {
         }
     }
 
-    public final void delete(T object) throws InternalServerException {
+    public void delete(T object) throws InternalServerException {
         try (Session session = HibernateUtil.createSessionFactory().openSession()) {
             Transaction transaction = session.getTransaction();
             transaction.begin();
@@ -65,7 +65,7 @@ public class DAO<T> {
 
             transaction.commit();
         } catch (HibernateException e) {
-            throw new InternalServerException("delete failed: something went wrong: " + e.getMessage() );
+            throw new InternalServerException("delete failed: something went wrong: " + e.getMessage());
         }
     }
 }

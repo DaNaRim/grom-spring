@@ -1,7 +1,6 @@
 package com.lesson3.homework.service;
 
 import com.lesson3.homework.DAO.FileDAO;
-import com.lesson3.homework.DAO.FileStorageFacade;
 import com.lesson3.homework.exceptions.BadRequestException;
 import com.lesson3.homework.exceptions.InternalServerException;
 import com.lesson3.homework.model.File;
@@ -10,12 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class FileServiceImpl implements FileService {
 
-    private final FileStorageFacade fileStorageFacade;
     private final FileDAO fileDAO;
 
     @Autowired
-    public FileServiceImpl(FileStorageFacade fileStorageFacade, FileDAO fileDAO) {
-        this.fileStorageFacade = fileStorageFacade;
+    public FileServiceImpl(FileDAO fileDAO) {
         this.fileDAO = fileDAO;
     }
 
@@ -26,7 +23,7 @@ public class FileServiceImpl implements FileService {
             checkSize(storage, file);
             fileDAO.checkFileName(storage, file);
 
-            return fileStorageFacade.put(storage, file);
+            return fileDAO.save(storage, file);
         } catch (BadRequestException e) {
             throw new BadRequestException("Cannot put file in storage " + storage.getId() + " : " + e.getMessage());
         }
@@ -35,8 +32,9 @@ public class FileServiceImpl implements FileService {
     public void delete(Storage storage, File file) throws BadRequestException, InternalServerException {
         try {
             fileDAO.findById(file.getId());
+            checkStorage(storage, file);
 
-            fileStorageFacade.delete(storage, file);
+            fileDAO.delete(storage, file);
         } catch (BadRequestException e) {
             throw new BadRequestException("Cannot delete file " + file.getId() + " from storage " + storage.getId() +
                     " : " + e.getMessage());
@@ -53,7 +51,7 @@ public class FileServiceImpl implements FileService {
             checkSize(storageFrom, storageTo);
             checkFiles(storageFrom, storageTo);
 
-            fileStorageFacade.transferAll(storageFrom, storageTo);
+            fileDAO.transferAll(storageFrom, storageTo);
         } catch (BadRequestException e) {
             throw new BadRequestException("Cannot transfer files from storage " + storageFrom.getId() + " to storage " +
                     storageTo.getId() + " : " + e.getMessage());
@@ -71,7 +69,7 @@ public class FileServiceImpl implements FileService {
             checkSize(storageTo, file);
             fileDAO.checkFileName(storageTo, file);
 
-            fileStorageFacade.transferFile(storageFrom, storageTo, id);
+            fileDAO.transferFile(storageFrom, storageTo, id);
         } catch (BadRequestException e) {
             throw new BadRequestException("Cannot transfer file " + id + " from storage " + storageFrom.getId() +
                     " to storage " + storageTo.getId() + " : " + e.getMessage());
@@ -87,7 +85,7 @@ public class FileServiceImpl implements FileService {
             checkSize(storage, file);
             fileDAO.checkFileName(storage, file);
 
-            return fileStorageFacade.update(file);
+            return fileDAO.update(file);
         } catch (BadRequestException e) {
             throw new BadRequestException("Cannot update file " + file.getId() + " : " + e.getMessage());
         }
@@ -111,12 +109,13 @@ public class FileServiceImpl implements FileService {
     }
 
     private void checkSize(Storage storage, File file) throws BadRequestException {
-        if (storage.getFreeSpace() < file.getSize()) throw new BadRequestException("No storage space");
+
+        if (getFreeSpace(storage) < file.getSize()) throw new BadRequestException("No storage space");
     }
 
     private void checkSize(Storage storageFrom, Storage storageTo) throws BadRequestException {
-        long filesSize = storageFrom.getStorageSize() - storageFrom.getFreeSpace();
-        if (filesSize > storageTo.getFreeSpace()) {
+        long filesSize = storageFrom.getStorageSize() - getFreeSpace(storageFrom);
+        if (filesSize > getFreeSpace(storageTo)) {
             throw new BadRequestException("No storage space");
         }
     }
@@ -135,5 +134,20 @@ public class FileServiceImpl implements FileService {
         if (storage1.getId() == storage2.getId()) {
             throw new BadRequestException("Transfer to the same storage");
         }
+    }
+
+    private void checkStorage(Storage storage, File file) throws BadRequestException {
+        if (file.getStorage().getId() != storage.getId()) {
+            throw new BadRequestException("The file is not in the given storage");
+        }
+    }
+
+    private long getFreeSpace(Storage storage) {
+        long freeSpace = storage.getStorageSize();
+
+        for (File file : storage.getFiles()) {
+            freeSpace -= file.getSize();
+        }
+        return freeSpace;
     }
 }

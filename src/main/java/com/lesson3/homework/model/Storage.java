@@ -14,7 +14,6 @@ public class Storage {
     private String[] formatsSupported;
     private String storageCountry;
     private long storageSize;
-    private long freeSpace;
 
     public Storage() {
     }
@@ -26,7 +25,6 @@ public class Storage {
         this.formatsSupported = formatsSupported;
         this.storageCountry = storageCountry;
         this.storageSize = storageSize;
-        this.freeSpace = storageSize;
     }
 
     @Id
@@ -74,11 +72,6 @@ public class Storage {
         return storageSize;
     }
 
-    @Column(name = "FREE_SPACE")
-    public long getFreeSpace() {
-        return freeSpace;
-    }
-
     public void setId(long id) {
         this.id = id;
     }
@@ -95,10 +88,6 @@ public class Storage {
         this.storageSize = storageSize;
     }
 
-    public void setFreeSpace(long freeSpace) {
-        this.freeSpace = freeSpace;
-    }
-
     @Override
     public String toString() {
         return "Storage{" +
@@ -106,7 +95,6 @@ public class Storage {
                 ", formatsSupported=" + Arrays.toString(formatsSupported) +
                 ", storageCountry='" + storageCountry + '\'' +
                 ", storageSize=" + storageSize +
-                ", freeSpace=" + freeSpace +
                 '}';
     }
 }
