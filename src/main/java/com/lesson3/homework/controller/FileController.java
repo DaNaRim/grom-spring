@@ -120,13 +120,17 @@ public class FileController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.PUT, params = {"name", "format", "size"}, produces = "text/plain")
+    @RequestMapping(method = RequestMethod.PUT, params = {"id", "name", "format", "size"}, produces = "text/plain")
     public @ResponseBody
-    String update(@RequestParam(value = "name") String name,
+    String update(@RequestParam(value = "id") long id,
+                  @RequestParam(value = "name") String name,
                   @RequestParam(value = "format") String format,
                   @RequestParam(value = "size") long size) {
         try {
-            File file = new File(name, format, size);
+            File file = fileService.findById(id);
+            file.setName(name);
+            file.setFormat(format);
+            file.setSize(size);
 
             fileService.update(file);
             return "update success";
@@ -142,7 +146,7 @@ public class FileController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = {"id"}, produces = "text/plain")
+    @RequestMapping(method = RequestMethod.GET, params = {"id"}, produces = "text/plain")
     public @ResponseBody
     String findById(@RequestParam(value = "id") long id) {
         try {

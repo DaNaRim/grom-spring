@@ -19,6 +19,8 @@ public class FileServiceImpl implements FileService {
 
     public File put(Storage storage, File file) throws BadRequestException, InternalServerException {
         try {
+            storage.setFiles(fileDAO.getFilesByStorage(storage));
+
             checkFileFormat(storage, file);
             checkSize(storage, file);
             fileDAO.checkFileName(storage, file);
@@ -31,7 +33,6 @@ public class FileServiceImpl implements FileService {
 
     public void delete(Storage storage, File file) throws BadRequestException, InternalServerException {
         try {
-            fileDAO.findById(file.getId());
             checkStorage(storage, file);
 
             fileDAO.delete(storage, file);
@@ -78,12 +79,15 @@ public class FileServiceImpl implements FileService {
 
     public File update(File file) throws InternalServerException, BadRequestException {
         try {
-            findById(file.getId());
+            File file0 = findById(file.getId());
 
             Storage storage = file.getStorage();
             checkFileFormat(storage, file);
             checkSize(storage, file);
-            fileDAO.checkFileName(storage, file);
+
+            if (!file0.getName().equals(file.getName())) {
+                fileDAO.checkFileName(storage, file);
+            }
 
             return fileDAO.update(file);
         } catch (BadRequestException e) {
@@ -128,7 +132,7 @@ public class FileServiceImpl implements FileService {
     }
 
     private void checkStorages(Storage storage1, Storage storage2) throws BadRequestException {
-        if (storage1.getFiles().isEmpty()) {
+        if (storage1.getFiles() == null) {
             throw new BadRequestException("Nothing to transfer");
         }
         if (storage1.getId() == storage2.getId()) {
@@ -143,6 +147,9 @@ public class FileServiceImpl implements FileService {
     }
 
     private long getFreeSpace(Storage storage) {
+
+        if (storage.getFiles() == null) return storage.getStorageSize();
+
         long freeSpace = storage.getStorageSize();
 
         for (File file : storage.getFiles()) {

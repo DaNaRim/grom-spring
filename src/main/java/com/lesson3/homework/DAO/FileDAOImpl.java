@@ -58,7 +58,7 @@ public class FileDAOImpl extends DAO<File> implements FileDAO {
             Transaction transaction = session.getTransaction();
             transaction.begin();
 
-            for (File file : storageFrom.getFiles()) {
+            for (File file : getFilesByStorage(storageFrom)) {
                 file.setStorage(storageTo);
                 super.update(file);
             }

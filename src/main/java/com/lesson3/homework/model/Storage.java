@@ -35,7 +35,7 @@ public class Storage {
         return id;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Transient
     public List<File> getFiles() {
         return files;
     }
