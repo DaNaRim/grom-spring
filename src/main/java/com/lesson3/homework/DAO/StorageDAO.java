@@ -8,5 +8,4 @@ public interface StorageDAO {
 
     Storage findById(long id) throws BadRequestException, InternalServerException;
 
-    Storage update(Storage storage) throws InternalServerException;
 }

@@ -35,13 +35,9 @@ public class Storage {
         return id;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public List<File> getFiles() {
         return files;
-    }
-
-    public void setFiles(List<File> files) {
-        this.files = files;
     }
 
     @Transient
@@ -74,6 +70,10 @@ public class Storage {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public void setFiles(List<File> files) {
+        this.files = files;
     }
 
     public void setFormatsSupported(String formatsSupported) {
