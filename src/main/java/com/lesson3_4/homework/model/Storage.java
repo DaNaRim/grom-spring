@@ -1,6 +1,6 @@
-package com.lesson3.homework.model;
+package com.lesson3_4.homework.model;
 
-import com.lesson3.homework.exceptions.BadRequestException;
+import com.lesson3_4.homework.exceptions.BadRequestException;
 
 import javax.persistence.*;
 import java.util.Arrays;

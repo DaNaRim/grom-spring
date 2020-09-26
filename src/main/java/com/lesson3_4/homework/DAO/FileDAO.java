@@ -1,12 +1,14 @@
-package com.lesson3.homework.DAO;
+package com.lesson3_4.homework.DAO;
 
-import com.lesson3.homework.exceptions.BadRequestException;
-import com.lesson3.homework.exceptions.InternalServerException;
-import com.lesson3.homework.model.File;
-import com.lesson3.homework.model.Storage;
+import com.lesson3_4.homework.exceptions.BadRequestException;
+import com.lesson3_4.homework.exceptions.InternalServerException;
+import com.lesson3_4.homework.model.File;
+import com.lesson3_4.homework.model.Storage;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface FileDAO {
 
     File save(Storage storage, File file) throws InternalServerException;

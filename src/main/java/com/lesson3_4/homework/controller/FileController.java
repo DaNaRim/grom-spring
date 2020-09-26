@@ -1,11 +1,11 @@
-package com.lesson3.homework.controller;
+package com.lesson3_4.homework.controller;
 
-import com.lesson3.homework.exceptions.BadRequestException;
-import com.lesson3.homework.exceptions.InternalServerException;
-import com.lesson3.homework.model.File;
-import com.lesson3.homework.model.Storage;
-import com.lesson3.homework.service.FileService;
-import com.lesson3.homework.service.StorageService;
+import com.lesson3_4.homework.exceptions.BadRequestException;
+import com.lesson3_4.homework.exceptions.InternalServerException;
+import com.lesson3_4.homework.model.File;
+import com.lesson3_4.homework.model.Storage;
+import com.lesson3_4.homework.service.FileService;
+import com.lesson3_4.homework.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

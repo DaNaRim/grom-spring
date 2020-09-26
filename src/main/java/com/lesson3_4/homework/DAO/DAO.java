@@ -1,7 +1,7 @@
-package com.lesson3.homework.DAO;
+package com.lesson3_4.homework.DAO;
 
-import com.lesson3.homework.exceptions.BadRequestException;
-import com.lesson3.homework.exceptions.InternalServerException;
+import com.lesson3_4.homework.exceptions.BadRequestException;
+import com.lesson3_4.homework.exceptions.InternalServerException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;

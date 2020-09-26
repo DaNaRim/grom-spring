@@ -1,16 +1,18 @@
-package com.lesson3.homework.DAO;
+package com.lesson3_4.homework.DAO;
 
-import com.lesson3.homework.exceptions.BadRequestException;
-import com.lesson3.homework.exceptions.InternalServerException;
-import com.lesson3.homework.model.File;
-import com.lesson3.homework.model.Storage;
+import com.lesson3_4.homework.exceptions.BadRequestException;
+import com.lesson3_4.homework.exceptions.InternalServerException;
+import com.lesson3_4.homework.model.File;
+import com.lesson3_4.homework.model.Storage;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
 import java.util.List;
 
+@Repository
 public class FileDAOImpl extends DAO<File> implements FileDAO {
 
     private static final String getFilesByStorageQuery = "SELECT * FROM FILES WHERE STORAGE_ID = :storageId";

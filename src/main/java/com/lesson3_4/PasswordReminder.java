@@ -1,11 +1,11 @@
-package com.lesson3;
+package com.lesson3_4;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class PasswordReminder {
 
-//    @Autowired
-    private DbConnector dbConnector;
+    //    @Autowired
+    private final DbConnector dbConnector;
 
     @Autowired
     public PasswordReminder(DbConnector dbConnector) {
