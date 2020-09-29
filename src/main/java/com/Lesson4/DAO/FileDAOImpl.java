@@ -9,7 +9,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.NoResultException;
 import java.util.List;
 
 @Repository
@@ -100,16 +99,15 @@ public class FileDAOImpl extends DAO<File> implements FileDAO {
     public void checkFileName(Storage storage, File file) throws BadRequestException, InternalServerException {
         try (Session session = HibernateUtil.createSessionFactory().openSession()) {
 
-            session.createNativeQuery(checkFileNameQuery, File.class)
+            List<File> files = session.createNativeQuery(checkFileNameQuery, File.class)
                     .setParameter("name", file.getName())
                     .setParameter("storageId", storage.getId())
-                    .getSingleResult();
+                    .list();
 
-            throw new BadRequestException("checkFileName failed: the file " + file.getId() + " with name " +
-                    file.getName() + "is already exist in storage " + storage.getId());
-
-        } catch (NoResultException e) {
-            System.out.println("checkFileName: Object not found in database. Will be saved");
+            if (files != null) {
+                throw new BadRequestException("checkFileName failed: the file " + file.getId() + " with name " +
+                        file.getName() + "is already exist in storage " + storage.getId());
+            }
         } catch (HibernateException e) {
             throw new InternalServerException("checkFileName failed: something went wrong while trying to check " +
                     "file " + file.getId() + " in storage " + storage.getId());
