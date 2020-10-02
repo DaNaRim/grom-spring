@@ -17,7 +17,7 @@ public class TestController {
         this.dao = dao;
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = "text/plan")
+    @RequestMapping(method = RequestMethod.POST, produces = "text/plan")
     public @ResponseBody
     String saveOrder() {
         Item item = new Item();
