@@ -8,6 +8,18 @@ public class Item {
     private Long id;
     private String description;
 
+    public Item() {
+    }
+
+    public Item(String description) {
+        this.description = description;
+    }
+
+    public Item(Long id, String description) {
+        this.id = id;
+        this.description = description;
+    }
+
     @Id
     @SequenceGenerator(name = "ITEM_SEQ", sequenceName = "ITEM_SEQ", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ITEM_SEQ")
