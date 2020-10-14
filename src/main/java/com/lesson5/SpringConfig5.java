@@ -1,7 +1,5 @@
 package com.lesson5;
 
-import com.lesson5.homework.ItemController5;
-import com.lesson5.homework.ItemDAO;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -20,15 +18,5 @@ public class SpringConfig5 {
     @Bean
     public TestController testController() {
         return new TestController(dao());
-    }
-
-    @Bean
-    public ItemDAO itemDAO() {
-        return new ItemDAO();
-    }
-
-    @Bean
-    public ItemController5 itemController5() {
-        return new ItemController5(itemDAO());
     }
 }

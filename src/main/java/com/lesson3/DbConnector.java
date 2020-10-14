@@ -1,4 +1,4 @@
-package com.lesson3_4;
+package com.lesson3;
 
 public interface DbConnector {
 

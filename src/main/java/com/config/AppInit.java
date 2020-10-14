@@ -1,6 +1,5 @@
 package com.config;
 
-import com.lesson3_4.homework.SpringConfig4;
 import com.lesson5.SpringConfig5;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -8,7 +7,7 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[]{AppConfig.class, SpringConfig4.class, SpringConfig5.class};
+        return new Class<?>[]{AppConfig.class, SpringConfig5.class};
     }
 
     @Override

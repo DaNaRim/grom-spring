@@ -1,6 +1,6 @@
-package com.lesson3_4;
+package com.lesson3;
 
-public class OracleDb implements DbConnector {
+public class MysqlDb implements DbConnector {
     @Override
     public void connect() {
 
