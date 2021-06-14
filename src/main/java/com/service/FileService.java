@@ -4,7 +4,9 @@ import com.exceptions.BadRequestException;
 import com.exceptions.InternalServerException;
 import com.model.File;
 import com.model.Storage;
+import org.springframework.stereotype.Service;
 
+@Service
 public interface FileService {
 
     File save(File file) throws InternalServerException, BadRequestException;

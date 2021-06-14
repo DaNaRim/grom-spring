@@ -6,9 +6,11 @@ import com.exceptions.InternalServerException;
 import com.model.File;
 import com.model.Storage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 
+@Service
 public class FileServiceImpl implements FileService {
 
     private final FileDAO fileDAO;

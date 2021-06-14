@@ -7,10 +7,12 @@ import com.model.Storage;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.List;
 
+@Repository
 public class FileDAOImpl extends DAO<File> implements FileDAO {
 
     private static final String TRANSFER_ALL_QUERY = "UPDATE FILES SET STORAGE_ID = :storageIdTo WHERE STORAGE_ID = :storageIdFrom";

@@ -4,7 +4,9 @@ import com.exceptions.BadRequestException;
 import com.exceptions.InternalServerException;
 import com.model.File;
 import com.model.Storage;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface FileDAO {
 
     File save(File file) throws InternalServerException;
