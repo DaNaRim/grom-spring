@@ -1,10 +1,10 @@
 package com.config;
 
-import com.DAO.ItemDAO;
-import com.DAO.ItemDAOImpl;
-import com.controller.ItemController;
-import com.service.ItemService;
-import com.service.ItemServiceImpl;
+import com.DAO.*;
+import com.controller.FlightController;
+import com.controller.PassengerController;
+import com.controller.PlaneController;
+import com.service.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -19,16 +19,15 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.persistence.EntityManagerFactory;
-import java.util.Properties;
 
 @Configuration
+@EnableTransactionManagement
 @ComponentScan(basePackages = {"com"})
 @EnableWebMvc
-@EnableTransactionManagement
 public class AppConfig {
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
         em.setPackagesToScan("com");
@@ -45,6 +44,7 @@ public class AppConfig {
         dataSource.setUrl("jdbc:oracle:thin:@gromcode-lessons.c2nwr4ze1uqa.us-east-2.rds.amazonaws.com:1521:ORCL");
         dataSource.setUsername("main");
         dataSource.setPassword("PyP2p02rIZ9uyMBpTBwW");
+
         return dataSource;
     }
 
@@ -61,25 +61,47 @@ public class AppConfig {
     }
 
     @Bean
-    public Properties additionalProperties() {
-        Properties properties = new Properties();
-        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.Oracle10gDialect");
-        return properties;
+    public FlightDAO flightDAO() {
+        return new FlightDAOImpl();
     }
 
     @Bean
-    public ItemDAO itemDAO() {
-        return new ItemDAOImpl();
+    public FlightService flightService() {
+        return new FlightServiceImpl(flightDAO(), planeService(), passengerService());
     }
 
     @Bean
-    public ItemService itemService() {
-        return new ItemServiceImpl(itemDAO());
+    public FlightController flightController() {
+        return new FlightController(flightService());
     }
 
     @Bean
-    public ItemController itemController() {
-        return new ItemController(itemService());
+    public PassengerDAO passengerDAO() {
+        return new PassengerDAOImpl();
     }
 
+    @Bean
+    public PassengerService passengerService() {
+        return new PassengerServiceImpl(passengerDAO());
+    }
+
+    @Bean
+    public PassengerController passengerController() {
+        return new PassengerController(passengerService());
+    }
+
+    @Bean
+    public PlaneDAO planeDAO() {
+        return new PlaneDAOImpl();
+    }
+
+    @Bean
+    public PlaneService planeService() {
+        return new PlaneServiceImpl(planeDAO());
+    }
+
+    @Bean
+    public PlaneController planeController() {
+        return new PlaneController(planeService());
+    }
 }
