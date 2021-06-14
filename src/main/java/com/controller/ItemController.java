@@ -2,8 +2,8 @@ package com.controller;
 
 import com.exception.BadRequestException;
 import com.exception.ObjectNotFoundException;
-import com.model.Passenger;
-import com.service.PassengerService;
+import com.model.Item;
+import com.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,26 +11,24 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
-@RequestMapping(value = "/passenger")
-public class PassengerController {
+@RequestMapping(value = "/item")
+public class ItemController {
 
-    private final PassengerService passengerService;
+    private final ItemService itemService;
 
     @Autowired
-    public PassengerController(PassengerService passengerService) {
-        this.passengerService = passengerService;
+    public ItemController(ItemService itemService) {
+        this.itemService = itemService;
     }
 
     @PostMapping(value = "/save", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "text/plain")
     public @ResponseBody
-    ResponseEntity<String> save(@RequestBody Passenger passenger) {
+    ResponseEntity<String> save(@RequestBody Item item) {
         try {
-            passengerService.save(passenger);
+            itemService.save(item);
 
-            return new ResponseEntity<>("Save success", HttpStatus.OK);
+            return new ResponseEntity<>("Ok", HttpStatus.OK);
         } catch (BadRequestException e) {
 
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -44,9 +42,9 @@ public class PassengerController {
     public @ResponseBody
     ResponseEntity<String> findById(@PathVariable long id) {
         try {
-            Passenger passenger = passengerService.findById(id);
+            itemService.findById(id);
 
-            return new ResponseEntity<>(passenger.toString(), HttpStatus.OK);
+            return new ResponseEntity<>("Ok", HttpStatus.OK);
         } catch (ObjectNotFoundException e) {
 
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -58,11 +56,11 @@ public class PassengerController {
 
     @PutMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "text/plain")
     public @ResponseBody
-    ResponseEntity<String> update(@RequestBody Passenger passenger) {
+    ResponseEntity<String> update(@RequestBody Item item) {
         try {
-            passengerService.update(passenger);
+            itemService.update(item);
 
-            return new ResponseEntity<>("Update success", HttpStatus.OK);
+            return new ResponseEntity<>("Ok", HttpStatus.OK);
         } catch (ObjectNotFoundException e) {
 
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -79,9 +77,9 @@ public class PassengerController {
     public @ResponseBody
     ResponseEntity<String> delete(@PathVariable long id) {
         try {
-            passengerService.delete(id);
+            itemService.delete(id);
 
-            return new ResponseEntity<>("Delete success", HttpStatus.OK);
+            return new ResponseEntity<>("Ok", HttpStatus.OK);
         } catch (ObjectNotFoundException e) {
 
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -91,23 +89,13 @@ public class PassengerController {
         }
     }
 
-    @GetMapping(value = "/regularPassengers/{year}", produces = "text/plain")
+    @DeleteMapping(value = "/deleteByName/{name}", produces = "text/plain")
     public @ResponseBody
-    ResponseEntity<String> regularPassengers(@PathVariable int year) {
-        //find passengers that have more than 25 flights per year
+    ResponseEntity<String> deleteByName(@PathVariable String name) {
         try {
-            List<Passenger> passengers = passengerService.regularPassengers(year);
+            itemService.deleteByName(name);
 
-            StringBuilder sb = new StringBuilder();
-            for (Passenger passenger : passengers) {
-                sb.append(passenger.toString()).append("\n");
-            }
-            sb.delete(sb.lastIndexOf("\n"), sb.length());
-
-            return new ResponseEntity<>(sb.toString(), HttpStatus.OK);
-        } catch (ObjectNotFoundException e) {
-
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Ok", HttpStatus.OK);
         } catch (BadRequestException e) {
 
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

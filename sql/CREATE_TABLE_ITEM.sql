@@ -1,0 +1,8 @@
+CREATE TABLE ITEM
+(
+    ID                NUMBER PRIMARY KEY,
+    NAME              NVARCHAR2(50) UNIQUE NOT NULL,
+    DATE_CREATED      DATE                 NOT NULL,
+    LAST_UPDATED_DATE DATE                 NOT NULL,
+    DESCRIPTION       NVARCHAR2(200)       NOT NULL
+);

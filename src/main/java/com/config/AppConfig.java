@@ -1,10 +1,10 @@
 package com.config;
 
-import com.DAO.*;
-import com.controller.FlightController;
-import com.controller.PassengerController;
-import com.controller.PlaneController;
-import com.service.*;
+import com.DAO.ItemDAO;
+import com.DAO.ItemDAOImpl;
+import com.controller.ItemController;
+import com.service.ItemService;
+import com.service.ItemServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -21,9 +21,9 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import javax.persistence.EntityManagerFactory;
 
 @Configuration
-@EnableTransactionManagement
 @ComponentScan(basePackages = {"com"})
 @EnableWebMvc
+@EnableTransactionManagement
 public class AppConfig {
 
     @Bean
@@ -61,47 +61,17 @@ public class AppConfig {
     }
 
     @Bean
-    public FlightDAO flightDAO() {
-        return new FlightDAOImpl();
+    public ItemDAO itemDAO() {
+        return new ItemDAOImpl();
     }
 
     @Bean
-    public FlightService flightService() {
-        return new FlightServiceImpl(flightDAO(), planeService(), passengerService());
+    public ItemService itemService() {
+        return new ItemServiceImpl(itemDAO());
     }
 
     @Bean
-    public FlightController flightController() {
-        return new FlightController(flightService());
-    }
-
-    @Bean
-    public PassengerDAO passengerDAO() {
-        return new PassengerDAOImpl();
-    }
-
-    @Bean
-    public PassengerService passengerService() {
-        return new PassengerServiceImpl(passengerDAO());
-    }
-
-    @Bean
-    public PassengerController passengerController() {
-        return new PassengerController(passengerService());
-    }
-
-    @Bean
-    public PlaneDAO planeDAO() {
-        return new PlaneDAOImpl();
-    }
-
-    @Bean
-    public PlaneService planeService() {
-        return new PlaneServiceImpl(planeDAO());
-    }
-
-    @Bean
-    public PlaneController planeController() {
-        return new PlaneController(planeService());
+    public ItemController itemController() {
+        return new ItemController(itemService());
     }
 }
